@@ -91,7 +91,7 @@
             color: #5c3d4a;
             text-decoration: none;
             font-size: 20px;
-            font-family: 'Times New Roman', Times, serif;
+            font-family: 'Allura', serif;
             transition: background 0.15s;
         }
         .menu-dropdown a:hover {
@@ -112,11 +112,9 @@
         .page.active { display: block; }
 
         #page-about {
-            font-family: 'Times New Roman', Times, serif;
-        }
-        #page-about h1 {
             font-family: 'Allura', serif;
         }
+
         #page-about .about-content {
             display: flex;
             flex-direction: row;
@@ -161,7 +159,6 @@
             object-fit: contain;
         }
 
-        /* Video grid: 3 videos per row */
         .video-gallery {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -311,14 +308,14 @@
             <img src="images/photo14.jpg" alt="Photo 14">
             <img src="images/photo13.jpg" alt="Photo 13">
             <img src="images/photo12.jpg" alt="Photo 12">
-            <img src="images/photo11.jpg" alt="Photo 11">
-            <img src="images/photo10.jpg" alt="Photo 10">
-            <img src="images/photo8.jpg" alt="Photo 8">
-            <img src="images/photo7.jpg" alt="Photo 7">
-            <img src="images/photo4.jpg" alt="Photo 4">
-            <img src="images/photo3.jpg" alt="Photo 3">
-            <img src="images/photo2.jpg" alt="Photo 2">
-            <img src="images/photo1.jpg" alt="Photo 1">
+            <img src="images/wspfountain.jpg" alt="Washington Square Park fountain">
+            <img src="images/rooseveltisland.jpg" alt="Cloudy view of a bridge from Roosevelt Island">
+            <img src="images/harborfront.jpg" alt="Sunny day at the Toronto islands pier">
+            <img src="images/chinatown.jpg" alt="Eclectic Chinatown storefront">
+            <img src="images/streetcar.jpg" alt="Toronto streetcar framed by a busy street">
+            <img src="images/cntower.jpg" alt="View of the CN Tower from Queen St W">
+            <img src="images/sunset.jpg" alt="Sunset crossed by transmission tower wires">
+            <img src="images/lakehuron.jpg" alt="A cloudy day at Lake Huron, Ontario">
         </div>
     </div>
 
@@ -347,7 +344,6 @@
         </div>
     </section>
 
-    <!-- Lightbox: images and videos -->
     <div id="lightbox">
         <img id="lightbox-img" src="" alt="">
         <video id="lightbox-video" controls playsinline></video>
@@ -432,7 +428,6 @@
             if (e.key === 'Escape') closeLightbox();
         });
 
-        // Menu: open/close and switch pages (Video, About)
         const menuBtn = document.getElementById('menuBtn');
         const menuDropdown = document.getElementById('menuDropdown');
         const menuBackdrop = document.getElementById('menuBackdrop');
