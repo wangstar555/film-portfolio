@@ -371,49 +371,34 @@
         </div>
      </section>
 
-    <script>
-        const lazyVideos = document.querySelectorAll("video[data-src]");
+<script>
+    const lazyVideos = document.querySelectorAll("video[data-src]");
 
-        const videoObserver = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    const video = entry.target;
+    const videoObserver = new IntersectionObserver(
+        (entries, observer) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
 
-                    if (entry.isIntersecting) {
-                        if (!video.src) {
-                            if (video.dataset.startTime) {
-                                video.addEventListener(
-                                    "loadedmetadata",
-                                    () => {
-                                        video.currentTime =
-                                            Number(video.dataset.startTime);
-                                    },
-                                    { once: true }
-                                );
-                            }
+                const video = entry.target;
 
-                            video.src = video.dataset.src;
-                            video.load();
-                        }
+                if (!video.src) {
+                    video.src = video.dataset.src;
+                    video.load();
+                }
 
-                        video.play().catch((error) => {
-                            console.log("Video could not autoplay:", error);
-                        });
-                    } else {
-                        video.pause();
-                    }
-                });
-            },
-            {
-                rootMargin: "200px 0px",
-                threshold: 0.1
-            }
-        );
+                observer.unobserve(video);
+            });
+        },
+        {
+            rootMargin: "200px 0px",
+            threshold: 0.1
+        }
+    );
 
-        lazyVideos.forEach((video) => {
-            videoObserver.observe(video);
-        });
-    </script>
+    lazyVideos.forEach((video) => {
+        videoObserver.observe(video);
+    });
+</script>
         
     <section id="page-about" class="page" aria-label="About">
     <h1>&#9734 About &#9734;</h1>
@@ -479,19 +464,13 @@
             lightboxVideo.play().catch(function () {});
         }
 
-        document.querySelectorAll('.video-gallery video').forEach(vid => {
-            var startTime = vid.getAttribute('data-start-time');
-            if (startTime != null) {
-                vid.addEventListener('loadedmetadata', function setCover() {
-                    vid.currentTime = parseFloat(startTime);
-                }, { once: true });
-            }
-            vid.addEventListener('click', () => {
-                const src = vid.getAttribute('data-src') || vid.src;
-                openVideoLightbox(src);
-            });
+    document.querySelectorAll('.video-gallery video').forEach(vid => {
+        vid.addEventListener('click', () => {
+            const src = vid.getAttribute('data-src') || vid.src;
+            openVideoLightbox(src);
         });
-
+    });
+        
         function closeLightbox() {
             lightbox.style.display = 'none';
             lightboxImg.src = '';
