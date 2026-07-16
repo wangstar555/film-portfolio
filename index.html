@@ -313,89 +313,99 @@
         <img src="images/harborfront.jpg" alt="Sunny day at the Toronto islands pier" loading="lazy">
         <img src="images/chinatown.jpg" alt="Eclectic Chinatown storefront" loading="lazy">
         <img src="images/streetcar.jpg" alt="Toronto streetcar framed by a busy street" loading="lazy">
-        <img src="images/images/cntower.jpg" alt="View of the CN Tower from Queen St W" loading="lazy">
+        <img src="images/cntower.jpg" alt="View of the CN Tower from Queen St W" loading="lazy">
         <img src="images/sunset.jpg" alt="Sunset crossed by transmission tower wires" loading="lazy">
         <img src="images/lakehuron.jpg" alt="A cloudy day at Lake Huron, Ontario" loading="lazy">
     </div>
 
     <section id="page-video" class="page" aria-label="Videobook">
         <h1>&#9734; Videobook &#9734;</h1>
-        
-     <div class="video-gallery">
-        <video
-            data-src="videos/nycwinter.mp4"
-            muted
-            loop
-            playsinline
-            preload="none"
-            poster="posters/nycwinter.png"
-        ></video>
-        <video
-            data-src="videos/nycsummer1.mp4"
-            data-start-time="20"
-            muted
-            loop
-            playsinline
-            preload="none"
-            poster="posters/nycsummer1.png"
-        ></video>
-        <video
-            data-src="videos/nycnight.mp4"
-            muted
-            loop
-            playsinline
-            preload="none"
-            poster="posters/nycnight.png"
-        ></video>
-        <video
-            data-src="videos/nycsummer2.mp4"
-            muted
-            loop
-            playsinline
-            preload="none"
-            poster="posters/nycsummer2.png"
-        ></video>
-        <video
-            data-src="videos/seaglasscarousel.mp4"
-            muted
-            loop
-            playsinline
-            preload="none"
-            poster="posters/seaglasscarousel.png"
-        ></video>
-    </div>
-    </section>
+
+        <div class="video-gallery">
+            <video
+                data-src="videos/nycwinter.mp4"
+                muted
+                loop
+                playsinline
+                preload="none"
+                poster="posters/nycwinter.png"
+            ></video>
+
+            <video
+                data-src="videos/nycsummer1.mp4"
+                data-start-time="20"
+                muted
+                loop
+                playsinline
+                preload="none"
+                poster="posters/nycsummer1.png"
+            ></video>
+
+            <video
+                data-src="videos/nycnight.mp4"
+                muted
+                loop
+                playsinline
+                preload="none"
+                poster="posters/nycnight.png"
+            ></video>
+
+            <video
+                data-src="videos/nycsummer2.mp4"
+                muted
+                loop
+                playsinline
+                preload="none"
+                poster="posters/nycsummer2.png"
+            ></video>
+
+            <video
+                data-src="videos/seaglasscarousel.mp4"
+                muted
+                loop
+                playsinline
+                preload="none"
+                poster="posters/seaglasscarousel.png"
+            ></video>
+        </div>
+     </section>
 
     <script>
         const lazyVideos = document.querySelectorAll("video[data-src]");
 
         const videoObserver = new IntersectionObserver(
-            (entries, observer) => {
+            (entries) => {
                 entries.forEach((entry) => {
-                    if (!entry.isIntersecting) {
-                        return;
-                    }
-
                     const video = entry.target;
 
-                    video.src = video.dataset.src;
-                    video.load();
+                    if (entry.isIntersecting) {
+                        if (!video.src) {
+                            if (video.dataset.startTime) {
+                                video.addEventListener(
+                                    "loadedmetadata",
+                                    () => {
+                                        video.currentTime =
+                                            Number(video.dataset.startTime);
+                                    },
+                                    { once: true }
+                                );
+                            }
 
-                    if (video.dataset.startTime) {
-                        video.addEventListener(
-                            "loadedmetadata",
-                            () => {
-                                video.currentTime = Number(video.dataset.startTime);
-                            },
-                            { once: true }
-                        );
+                            video.src = video.dataset.src;
+                            video.load();
+                        }
+
+                        video.play().catch((error) => {
+                            console.log("Video could not autoplay:", error);
+                        });
+                    } else {
+                        video.pause();
                     }
-
-                    observer.unobserve(video);
                 });
             },
             {
-                rootMargin: "200px"
+                rootMargin: "200px 0px",
+                threshold: 0.1
             }
         );
 
@@ -404,8 +414,8 @@
         });
     </script>
     </div>
-
-    <section id="page-about" class="page" aria-label="About">
+        
+        <section id="page-about" class="page" aria-label="About">
         <h1>&#9734 About &#9734;</h1>
         <div class="about-content">
             <div class="about-text">
